@@ -1,5 +1,6 @@
 ﻿using API.Data;
 using API.DTOs;
+using API.Interfaces;
 using API.Models;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,10 @@ using System.Text;
 
 namespace API.Controllers
 {
-    public class AccountController(DataContext context) : BaseApiController
+    public class AccountController(DataContext context, ITokenService tokenService) : BaseApiController
     {
         [HttpPost("register")]
-        public async Task<ActionResult<AppUser>> Register(RegisterDTO dto)
+        public async Task<ActionResult<UserDTO>> Register(RegisterDTO dto)
         {
             try
             {
@@ -33,7 +34,13 @@ namespace API.Controllers
                 context.Users.Add(newUser);
                 await context.SaveChangesAsync();
 
-                return Ok(newUser);
+                var newUserDTO = new UserDTO
+                {
+                    Username = newUser.UserName,
+                    Token = tokenService.CreateToken(newUser)
+                };
+
+                return newUserDTO;
             }
 
             catch (Exception e)
@@ -44,7 +51,7 @@ namespace API.Controllers
 
 
         [HttpPost("login")]
-        public async Task<ActionResult<AppUser>> Login(LoginDTO dto)
+        public async Task<ActionResult<UserDTO>> Login(LoginDTO dto)
         {
             //find in db the user that has the same username
             var user = await context.Users.FirstOrDefaultAsync(user => user.UserName.ToLower() == dto.Username.ToLower());
@@ -63,7 +70,11 @@ namespace API.Controllers
             {
                 if (user.PasswordHash[i] == dtoHashedPassword[i])
                 {
-                    return Ok(user);
+                    return new UserDTO
+                    { 
+                        Username = user.UserName,
+                        Token = tokenService.CreateToken(user)
+                    };
                 }
             }
 
