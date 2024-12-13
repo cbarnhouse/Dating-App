@@ -1,6 +1,8 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,6 +13,8 @@ import { AccountService } from '../_services/account.service';
 })
 export class RegisterComponent implements OnInit {
   private accountService = inject(AccountService);
+  private toasterService = inject(ToastrService);
+  private router = inject(Router);
   @Output() cancelRegister = new EventEmitter();
   model: any = {}
 
@@ -23,11 +27,17 @@ export class RegisterComponent implements OnInit {
         console.log(response)
         this.cancel();
       },
-      error: error => console.log(error)
+      error: error => this.toasterService.error(error.error)
     });
   }
 
   cancel() {
+    this.router.navigateByUrl("/");
+  }
+
+  /*
+  cancel() {
     this.cancelRegister.emit(false);
   }
+  */
 }

@@ -1,6 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RegisterComponent } from "../register/register.component";
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +13,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
   http = inject(HttpClient);
+  router = inject(Router);
+  accountService = inject(AccountService);
   registerMode = false;
   users: any;
 
@@ -19,7 +23,8 @@ export class HomeComponent implements OnInit {
   }
 
   registerToggle() {
-    this.registerMode = !this.registerMode;
+    this.router.navigateByUrl("/register");
+    //this.registerMode = !this.registerMode;
   }
 
   cancelRegisterMode(event: boolean) {
