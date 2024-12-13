@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-register',
@@ -8,14 +9,25 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
+  private accountService = inject(AccountService);
+  @Output() cancelRegister = new EventEmitter();
   model: any = {}
 
+  ngOnInit(): void {
+  }
+
   register() {
-    console.log(this.model);
+    this.accountService.register(this.model).subscribe({
+      next: response => {
+        console.log(response)
+        this.cancel();
+      },
+      error: error => console.log(error)
+    });
   }
 
   cancel() {
-    console.log("cancelled");
+    this.cancelRegister.emit(false);
   }
 }
