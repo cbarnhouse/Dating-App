@@ -1,0 +1,16 @@
+<h4>Internal Server Error</h4>
+@if (error)
+{
+    <div class="container">
+        <h5 class="text-danger">Error: {{error.message}}</h5>
+        <p class="font-weight-bold">Note: If you are seeing this, an issue has occured with the API.</p>
+        <p>What to do next:</p>
+        <ol>
+            <li>Open Chrome Dev Tools and check the failing Network Request</li>
+            <li>Examine the URL of the failing request</li>
+            <li>Reproduce the error in Postman - if you can, your Angular code is fine, start troubleshooting the API.</li>
+        </ol>
+        <p class="font-weight-bold">Stack Trace: </p>
+        <code class="mt-5" style="background-color: whitesmoke;">{{error.details}}</code>
+    </div>
+}
