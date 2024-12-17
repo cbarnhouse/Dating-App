@@ -24,7 +24,6 @@ export class HomeComponent implements OnInit {
 
   registerToggle() {
     this.router.navigateByUrl("/register");
-    //this.registerMode = !this.registerMode;
   }
 
   cancelRegisterMode(event: boolean) {
