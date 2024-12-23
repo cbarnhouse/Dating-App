@@ -9,12 +9,15 @@ import { RegisterComponent } from './register/register.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { preventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'members', component: MemberListComponent, canActivate: [authGuard]},
     {path: 'members/:username', component: MemberDetailComponent, canActivate: [authGuard]},
+    {path: 'member/edit', component: MemberEditComponent, canDeactivate: [preventUnsavedChangesGuard]},
     {path: 'lists', component: ListsComponent, canActivate: [authGuard]},
     {path: 'messages', component: MessagesComponent, canActivate: [authGuard]},
     {path: 'errors', component: TestErrorsComponent},

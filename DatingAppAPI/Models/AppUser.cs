@@ -12,7 +12,7 @@ namespace API.Models
 
         public byte[] PasswordSalt { get; set; } = [];
 
-        public DateOnly DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; } 
 
         public required string KnownAs { get; set; }
 

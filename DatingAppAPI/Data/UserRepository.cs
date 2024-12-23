@@ -31,14 +31,6 @@ namespace API.Data
             return await context.SaveChangesAsync() > 0;
         }
 
-        //When retrieving an entity from the db, EF begins tracking it
-        //If there's a change to that entity made, EF knows already and updates it
-        //This method is to set the EntityState enum to modified in case it's useful later
-        public void Update(AppUser user)
-        {
-            context.Entry(user).State = EntityState.Modified;
-        }
-
         public async Task<IEnumerable<MemberDTO>> GetMembersAsync()
         {
             return await context.Users
@@ -52,6 +44,14 @@ namespace API.Data
                 .Where(x => x.UserName == username)
                 .ProjectTo<MemberDTO>(mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
+        }
+
+        //When retrieving an entity from the db, EF begins tracking it
+        //If there's a change to that entity made, EF knows already and updates it
+        //This method is to set the EntityState enum to modified in case it's useful later
+        public void Update(AppUser user)
+        {
+            context.Entry(user).State = EntityState.Modified;
         }
     }
 }

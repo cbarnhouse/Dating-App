@@ -2,6 +2,7 @@
 using API.DTOs;
 using API.Interfaces;
 using API.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace API.Controllers
 {
-    public class AccountController(DataContext context, ITokenService tokenService) : BaseApiController
+    public class AccountController(DataContext context, ITokenService tokenService, IMapper mapper) : BaseApiController
     {
         [HttpPost("register")]
         public async Task<ActionResult<UserDTO>> Register(RegisterDTO dto)
@@ -20,9 +21,9 @@ namespace API.Controllers
                 return BadRequest("Username already exists");
             }
 
+            //TODO: add user functionality
             return Ok();
         }
-
 
         [HttpPost("login")]
         public async Task<ActionResult<UserDTO>> Login(LoginDTO dto)
