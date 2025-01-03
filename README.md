@@ -1,5 +1,5 @@
 # Dating-App
-This is an app I've made to learn the newer versions of Angular and .Net (Angular 18, .Net 8). It follows a great course made by Neil Cummings called "A practical example of how to build an application with ASP.NET Core API and Angular from start to finish." I have no affiliation, I think it's a great course want to give due credit. 
+This is an app I've made to learn the newer versions of Angular and .Net (Angular 18, .Net 8). It follows a great course made by Neil Cummings called "A practical example of how to build an application with ASP.NET Core API and Angular from start to finish." I have no affiliation, I just think it's a great course and want to give due credit. 
 
 # Database
 The app uses a local SQLlite database with Entity Framework as the ORM. The repository pattern is used.
