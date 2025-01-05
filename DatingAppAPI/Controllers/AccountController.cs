@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -21,8 +22,42 @@ namespace API.Controllers
                 return BadRequest("Username already exists");
             }
 
-            //TODO: add user functionality
             return Ok();
+
+            
+            //TODO: Update to use repository
+            /*
+            try
+            if (await userExists(dto))
+            {
+                if (await isDuplicate(dto))
+                {
+                    return BadRequest("Username already exists");
+                }
+                using var hmac = new HMACSHA512();
+                var newUser = new AppUser
+                {
+                    UserName = dto.Username.ToLower(),
+                    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(dto.Password)),
+                    PasswordSalt = hmac.Key
+                };
+                context.Users.Add(newUser);
+                await context.SaveChangesAsync();
+                var newUserDTO = new UserDTO
+                {
+                    Username = newUser.UserName,
+                    Token = tokenService.CreateToken(newUser)
+                };
+                return newUserDTO;
+                return BadRequest("Username already exists");
+            }
+
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+            return Ok();
+            */
         }
 
         [HttpPost("login")]
